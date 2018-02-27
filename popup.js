@@ -1,21 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
-  var rsvpButton = document.getElementById('rsvp');
-  
-  //var checkPageButton = document.getElementById('checkPage');
+
+  const rsvpButton = document.getElementById('rsvp');
 
   rsvp.addEventListener('click', function() {
-    var groupName = document.getElementById('group_name').value;
-    const key = '77564923301b687169247f3028545';
-    const endpoint = `https://api.meetup.com/2/events?key=${key}&group_urlname=${groupName}`;
-    console.log(endpoint);
-    fetch(endpoint)
-      .then(data => console.log(data));
 
-    events.forEach(event => 
-      let event_url = event.event_url;
-      let event_id = event_url;
-      const endpoint = `https://api.meetup.com/2/rsvp?key=${key}&event_url=${event_id}&rsvp=yes`;
-    )  
+    let re = /\d+[^\/]/;
+    let counter = 0;
+
+    const groupName = document.getElementById('group_name').value;
+    const amount = parseInt(document.getElementById('amount').value);
+    const key = 'key=77564923301b687169247f3028545';
+    const endpoint = `https://api.meetup.com/${groupName}/events`;
+    const eventsEndpoint = `${endpoint}?${key}`;
+
+    fetch(eventsEndpoint)
+      .then(response => response.json())
+      .then(events => console.log(events));
+
+    while(counter < amount) {
+      let event = events[counter].link;
+      let eventId = event.match(re)[0];
+      let eventEndpoint = `${endpoint}/${eventId}/rsvps?${key}&response=yes`;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', eventEndpoint);
+      xhr.send(null);
+      counter++;
+    }
+
+    events.forEach((event) => { 
+      let eventId = event.link;
+      eventId = event_id.match(re)[0];
+      let eventEndpoint = `${endpoint}/${eventId}/rsvps?${key}&response=yes`;
+
+    });  
   });  
 
   /*

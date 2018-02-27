@@ -3,11 +3,18 @@
   <head>
     <title></title>
     <script src='popup.js'></script>
+    <link rel='stylesheet' type='text/css' href='popup.css'>
   </head>
   <body>
     <h1>RSVP to multiple meetup events</h1>
+    <div>
       <label>Add your group name</label>
-      <input id='group_name' type='name' name='group_name'>
-      <button id='rsvp'>RSVP</button>
+      <input id='group_name' type='name'>
+    </div>
+    <div>
+      <label>How many events do you want to rsvp to?</label>
+      <input id='amount' type='name'>
+    </div>
+    <button id='rsvp' class='btn primary'>RSVP</button>
   </body>
 </html>
